@@ -1,62 +1,115 @@
 * {
-    font-family: 'Century Gothic';
+    font-family: 'Montserrat';
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-color: #010409;
+    background-color: #F8F9FA;
+    overflow-x: hidden;
     
     .editor {
         display: flex;
-    
-        form, .view {
-            width: 50%;
+        min-width: 100vw;
+        height: 87.6vh;
+    }
+
+    aside {
+        position: relative;
+        display: block;
+        width: 15%;
+        height: 100%;
+        padding: 60px 20px;
+
+        .save {
+            position: fixed;
+            left: 1%;
+            bottom: 30px;
+            text-align: center;
+            font-size: 24px;
+            width: 15%;
         }
-    
-        form {
-            textarea {
-                width: calc(100% - 20px);
-                height: calc(100vh - 25px);
-                background-color: #0D1117;
-                border: 0;
-                font-size: 24px;
-                color: #ffffff;
-                padding: 10px;
 
-                &:active, &:focus {
-                    border: 0;
-                    outline: 0;
-                }
-            }
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
 
-            button {
-                height: calc(8vh - 15px);
-                width: 100%;
-                margin: 0;
-                background-color: #30363D;
-                border: 0;
-                margin-top: -5px;
-                color: #ffffff;
-                text-transform: uppercase;
-                font-size: 24px;
-                letter-spacing: 1.5px;
+        ul {
+            text-align: center;
+            list-style: none;
+            margin: 0 auto;
+            padding: 40px 0 0 0;
+            margin-top: 40px;
+            border-top: 1px solid #344767;
+            width: 80%;
+
+            li {
                 cursor: pointer;
+                margin-bottom: 20px;
+                border-radius: 0.5rem;
+                padding: 0.675rem 0;
                 transition: 0.2s;
 
-                &:hover {
-                    opacity: 0.7;
+                &.active, &:hover {
+                    color: #344767;
+                    background-color: #fff;
+                    font-weight: 600;
+                    box-shadow: 0 10px 27px 0 rgba(0, 0, 0, 0.2);
                 }
             }
         }
+    }
 
-        .view {
-            background-color: #010409;
-            height: calc(100vh - 25px);
-            padding: 10px;
-            font-size: 25px;
-            color: #ffffff;
-            word-wrap: break-word;
+    textarea, .view {
+        width: 37%;
+        border: 0;
+        border-radius: 25px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
+              0 2px 2px rgba(0,0,0,0.12), 
+              0 4px 4px rgba(0,0,0,0.12), 
+              0 8px 8px rgba(0,0,0,0.12),
+              0 16px 16px rgba(0,0,0,0.12);
+        padding: 15px;
+        background-color: #ffffff;
+        margin-top: 2.8%;
+    }
+
+    textarea {
+        resize: none;
+        height: 98%;
+
+        &:focus {
+            outline: none;
         }
+    }
+
+    .view {
+        height: 98.5%;        
+        margin-left: 3%;
+    }
+}
+
+.button {
+    display: block;
+    margin: 10px auto;
+    min-width: 80%;
+    padding: 10px 25px;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-size: 15px;
+
+    &.-primary {
+        background-color: #CB0C9F;
+        color: #FFFFFF;
+    }
+
+    &:hover {
+        opacity: 0.6;
     }
 }
