@@ -22,6 +22,7 @@ class App extends Component {
     
     this.clearState = () => ({
       value: '',
+      title: '',
       id: this.randomKey()
     })
 
@@ -31,7 +32,8 @@ class App extends Component {
     
     this.state = {
       ...this.clearState(),
-      isSaving: null
+      isSaving: null,
+      files: {}
     }
 
     this.createNew = () => {
@@ -39,9 +41,9 @@ class App extends Component {
       this.textarea.focus()
     }
 
-    this.handleChange = (e) => {
+    this.handleChange = (field) => (e) => {
       this.setState({
-        value: e.target.value,
+        [field]: e.target.value,
         isSaving: true
       })
     }
@@ -52,13 +54,25 @@ class App extends Component {
 
     this.handleSave = () => {
       if(this.state.isSaving) {
-        localStorage.setItem(this.state.id, this.state.value)
-        this.setState({ isSaving: false })
+        const files = {
+          ...this.state.files,
+          [this.state.id]: {
+            title: this.state.title || 'Sem título',
+            content: this.state.value
+          }
+        }
+        localStorage.setItem('markdown-editor', JSON.stringify(files))
+        this.setState({ 
+          isSaving: false,
+          files
+        })
       }
     }
 
     this.handleRemove = () => {
-      localStorage.removeItem(this.state.value)
+      const { [this.state.id]: id, ...files } = this.state.files
+      localStorage.setItem('markdown-editor', JSON.stringify(files))
+      this.setState({ files })
       this.createNew()
     }
 
@@ -69,15 +83,28 @@ class App extends Component {
     this.textareaRef = (node) => {
       this.textarea = node
     }
+  
+    this.handleOpenFile = (id) => () => {
+      this.setState({
+        title: this.state.files[id].title,
+        value: this.state.files[id].content,
+        id
+      })
+    }
   }
 
   componentDidUpdate() {
     clearInterval(this.timer)
-    this.timer = setTimeout(this.handleSave, 500)
+    this.timer = setTimeout(this.handleSave, 250)
   }
 
   componentWillUnmount() {
     clearInterval(this.timer)
+  }
+
+  componentDidMount() {
+    const files = JSON.parse(localStorage.getItem('markdown-editor'))
+    this.setState({ files })
   }
   
   render() {
@@ -90,6 +117,9 @@ class App extends Component {
         handleRemove={this.handleRemove}
         handleCreate={this.handleCreate}
         textareaRef={this.textareaRef}
+        files={this.state.files}
+        handleOpenFile={this.handleOpenFile}
+        title={this.state.title}
       />
     );
   }

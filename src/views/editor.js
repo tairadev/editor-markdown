@@ -5,10 +5,10 @@ import Aside from '../components/markdown-editor/aside';
 const MarkdownEditor = ({ value, handleChange, getMarkup, textareaRef, ...props }) => {
   return (
     <section className='editor'>
-      <Aside {...props} />
+      <Aside {...props} handleChange={handleChange} />
       <textarea 
         value={value} 
-        onChange={handleChange} 
+        onChange={handleChange('value')} 
         ref={textareaRef}
         autoFocus
       />
